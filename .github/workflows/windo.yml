@@ -33,8 +33,7 @@ jobs:
           Start-Process msiexec -ArgumentList "/i C:\tailscale.msi /quiet /norestart" -Wait
 
           Start-Sleep -Seconds 5
-          & "C:\Program Files\Tailscale\tailscale.exe" up --authkey="$Env:TAILSCALE_AUTHKEY" --hostname="github-rdp-server" --ephemeral --unattended
-
+          & "C:\Program Files\Tailscale\tailscale.exe" up --hostname="github-rdp-server"
           Start-Sleep -Seconds 8
           $ts_ip = & "C:\Program Files\Tailscale\tailscale.exe" ip -4
 
