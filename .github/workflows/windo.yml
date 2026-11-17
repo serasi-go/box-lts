@@ -1,20 +1,22 @@
-name: Windows Cloud RDP
-
+name: WINDOWS_SERVER25_RDP
 on:
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: windows-latest
-    timeout-minutes: 360 # Maksimal 6 jam penuh (gratis di repo public)
+    timeout-minutes: 360 # Maksimal 6HR REPO PUBLIC
 
     steps:
       - name: 1. Enable Remote Desktop & Firewall
         run: |
-          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -Value 0
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' 
+          -name "fDenyTSConnections" -Value 0 -Force
           Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 0
-
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' 
+          -name "UserAuthentication" -Value 0 -Force
+          Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' `
+          -Name "SecurityLayer" -Value 0 -Force
+          
       - name: 2. Create Admin Account
         env:
           RDP_PASS: ${{ secrets.RDP_PASSWORD }}
