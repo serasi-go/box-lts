@@ -18,7 +18,7 @@ jobs:
       - name: 2. Create Admin Account
         env:
           RDP_PASS: ${{ secrets.RDP_PASSWORD }}
-        run: |
+        run: |			
 			$Password = ConvertTo-SecureString "$Env:RDP_PASS" -AsPlainText -Force
 			New-LocalUser -Name "NvDAdmin" -Password $Password -PasswordNeverExpires -ErrorAction SilentlyContinue
 			Add-LocalGroupMember -Group "Administrators" -Member "NvDAdmin" -ErrorAction SilentlyContinue
