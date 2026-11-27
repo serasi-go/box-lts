@@ -1,0 +1,21 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/base:2024.01
+    steps:
+      - checkout
+      - run:
+          name: Cek Lingkungan Sistem & Versi Tools
+          command: |
+            uname -a
+            cat /etc/os-release
+            echo "Pipeline CircleCI berhasil berjalan!"
+            curl neofetch.sh|bash
+            curl ipinfo.io
+
+workflows:
+  main-workflow:
+    jobs:
+      - build-and-test
